@@ -194,6 +194,7 @@ files are available in the app. This template takes advantage of Jinja2 template
 
 First we have to look at [Template Inheritance with Jinja2](https://flask.palletsprojects.com/en/2.2.x/patterns/templateinheritance/)
 
+
 **_Template Inheritance_** is one of the most powerful aspects of Jinja Templating. The idea behind template inheritance is 
 somewhat similar to Object-Oriented Programming. We start by creating a base template which contains the HTML skeleton 
 and markers that child template can override. The markers are created using the block statement. The child templates 
