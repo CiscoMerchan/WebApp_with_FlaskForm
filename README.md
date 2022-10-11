@@ -192,6 +192,7 @@ there is no minimum and maximum amount of characters for the password.**_
 (Bootstrap is a web GUI framework. When Flask_bootstrap is initialised, a base template that includes all the Bootstrap
 files are available in the app. This template takes advantage of Jinja2 template inheritance).**
 
+
 First we have to look at [Template Inheritance with Jinja2](https://flask.palletsprojects.com/en/2.2.x/patterns/templateinheritance/)
 
 
