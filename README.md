@@ -1,7 +1,13 @@
-**Create a Login form with FlaskForm**
+# Create a Login form with FlaskForm 
 
-*The end result : [https://github.com/CiscoRostam/login-with-Flask.git](https://github.com/CiscoRostam/login-with-Flask)
 
+To follow with the [video](https://www.youtube.com/watch?v=eY7pSCeF_Rg) please install:
+    
+   *[Python 3.9 or later](https://www.python.org/downloads/)
+
+   *git 
+
+   *[Pycharm Community Edition 2022.2](https://www.jetbrains.com/pycharm/download/#section=windows)
 
 References:
 
@@ -24,26 +30,29 @@ References:
 
    * Create a login function to render the “login.html” template. 
 
-     - In Jinja double curly **`{{ }}`** brackets allows us to evaluate an expression, variable or function call and print the 
-       result into the template.
-   * Add an [url_for()](https://tedboy.github.io/flask/generated/flask.url_for.html) mapped to ‘login’ function in 
-     the _href=" "_ inside the anchor <a> tag that is in "index.html" , like this when the user clicks on Login button the user will be redirected to "login.html".
+   * Create a link between the login button in 'index.html' and login() function in 'main.py'
+        - To scape the HTML syntax we use Jinja2, double curly **`{{ }}`** brackets allows us to evaluate an expression, variable or function call and print the 
+          result into the template.
+        - to create a link use [url_for()](https://tedboy.github.io/flask/generated/flask.url_for.html) that will map the ‘login’ function in 
+        the _href=" "_ inside the anchor <a> tag that is in "index.html" , like this when the user clicks on Login button the user will be redirected to "login.html".
 
    - Refresh the browser and click on the Login button.     
 
+
+#### Setting up Form
 
 
 **Challenge 2:  In main.py create a Form with WTForm([FlaskForm](https://flask-wtf.readthedocs.io/en/0.15.x/form/))**
 
 
-* Install flask_wtf and wtforms:
+* Set in main.py flask_wtf and wtforms:
    
    ```
       from flask_wtf import FlaskForm
       from wtforms import StringField,SubmitField```
 
 
-* Create a class object call LoginForm that inherits from class FlaskForm and define the fields in the form with 
+* To build a web form, create a subclass call LoginForm that inherits class FlaskForm base and define the form [fields](https://wtforms.readthedocs.io/en/3.0.x/fields/) in the form with 
   wtforms class variables :
   
    
@@ -54,7 +63,9 @@ References:
          submit = SubmitField(label='Log')```
 	
 
-**By default, WTForm  protects all forms against [Cross-Site Request Forgery (CSRF)](https://flask-wtf.readthedocs.io/en/1.0.x/csrf/#html-forms) attacks. To implement CSRF protection.**
+**By default, WTForm  protects all forms against [Cross-Site Request Forgery (CSRF)](https://owasp.org/www-community/attacks/csrf) attacks. To implement CSRF protection.**
+    
+   * Build a configuration value for protect the LoginForm from CSRF attacks 
 	 
 
     `app = Flask(__name__)
@@ -63,7 +74,7 @@ References:
 
 **Challenge 3:  Render  the LoginForm on login.html template**
 
-  * Create an object of LoginForm to pass as an argument in render_template() with a key/value pair.
+  * Instantiate LoginForm  in variable call 'form' to pass as an argument in render_template('login.html').
       
       ```
          @app.route("/login")
@@ -72,7 +83,7 @@ References:
 
            return render_template('login.html',form=form)```
 
-  * Render form in login.html
+  * Display the web-form in login.html using the 'form' variable 
     
           ```<form >
           {{ form.csrf_token }}
@@ -80,6 +91,8 @@ References:
           {{ form.password.label }}<br>{{ form.password(size=20) }}<br>
           {{ form.submit }}
           </form>``` 
+
+#### Accessing Form Data
 
 
 **HTTP Methods: To establish communication between the user and the servers, Flask routing decorator uses 
@@ -100,19 +113,19 @@ user  provides information to the server.**
       ```<form method="post">```
 
   
-**The Form is working but is not completely functional, the form still doesn't know if  the email input is really an
+_**The Form is working but is not completely functional, the form still doesn't know if  the email input is really an
 email (text contains @), the user password is visible in the entry field, the data in both fields are not required and
-there is no minimum and maximum amount of characters for the password.**
+there is no minimum and maximum amount of characters for the password.**_
 
 
-**Challenge 5: Instruct the form with validators argument**
+**Challenge 5: Add validators to the web-form to ensure that the entered data is correct**
 
    * Replace the [fields with the object class variables associated with the field](https://wtforms.readthedocs.io/en/2.3.x/fields/#wtforms.fields.StringField).
       
     
     ```from wtforms import SubmitField, PasswordField,EmailField```
 
-   * Install [wtforms.validators](https://flask-wtf.readthedocs.io/en/1.0.x/quickstart/#validating-forms) and give it an optional validator to ensure that the field is not submitted empty 
+   * Install [wtforms.validators](https://flask-wtf.readthedocs.io/en/1.0.x/quickstart/#validating-forms) library and give it an optional validator to ensure that the field is not submitted empty 
       and a length for the password.
    `from wtforms.validators import DataRequired, Length`
 
@@ -131,7 +144,7 @@ there is no minimum and maximum amount of characters for the password.**
 
 **Challenge 6: Print user email in the console.**
 
-  * Establish a condition in the login function that if the data from the form  is [validate_on_submit()](https://flask-wtf.readthedocs.io/en/0.15.x/quickstart/).printed
+  * Establish a condition in the login function that if the data from the 'form'  is [validate_on_submit()](https://flask-wtf.readthedocs.io/en/0.15.x/quickstart/).printed
     the user email in the console. 
 
       
@@ -165,7 +178,7 @@ there is no minimum and maximum amount of characters for the password.**
             form = LoginForm()
             if form.validate_on_submit():
                 if form.email.data == 'admin@email.com' 
-                                       and form.password.data == '123':                
+                                       and form.password.data == '12345678':                
                 return render_template('success.html')
                 else:
                       return render_template('denied.html')
@@ -179,7 +192,9 @@ there is no minimum and maximum amount of characters for the password.**
 (Bootstrap is a web GUI framework. When Flask_bootstrap is initialised, a base template that includes all the Bootstrap
 files are available in the app. This template takes advantage of Jinja2 template inheritance).**
 
+
 First we have to look at [Template Inheritance with Jinja2](https://flask.palletsprojects.com/en/2.2.x/patterns/templateinheritance/)
+
 
 **_Template Inheritance_** is one of the most powerful aspects of Jinja Templating. The idea behind template inheritance is 
 somewhat similar to Object-Oriented Programming. We start by creating a base template which contains the HTML skeleton 
@@ -246,3 +261,12 @@ with one line of code the LoginForm is rendered in the login.html template.**_
    * Below to uncomment `<form></form>` tag. Type: `{{ wtf.quick_form(form) }}`
 
    - Refresh the browser and see the result.
+
+
+   **Conclusion**
+
+
+You made a Flask application that has a web-form, using the Flask-WTF extension and the WTForms library. The form has several
+types of fields to receive data from the user, validate it using special WTForms validators, dependent on the entered data
+the user is directed to success.html template or denied.html template, to use flask_bootstrap extension for style the webapp
+and use bootstrap as support to display the LoginForm with one line of code.
