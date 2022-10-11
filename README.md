@@ -262,7 +262,9 @@ with one line of code the LoginForm is rendered in the login.html template.**_
 
 
    **Conclusion**
-    You made a Flask application that has a web-form, using the Flask-WTF extension and the WTForms library. The form has several
-    types of fields to receive data from the user, validate it using special WTForms validators, dependent on the entered data
-    the user is directed to success.html template or denied.html template, to use flask_bootstrap extension for style the webapp
-    and use bootstrap as support to display the LoginForm with one line of code.
+
+
+You made a Flask application that has a web-form, using the Flask-WTF extension and the WTForms library. The form has several
+types of fields to receive data from the user, validate it using special WTForms validators, dependent on the entered data
+the user is directed to success.html template or denied.html template, to use flask_bootstrap extension for style the webapp
+and use bootstrap as support to display the LoginForm with one line of code.
